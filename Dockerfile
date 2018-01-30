@@ -1,20 +1,33 @@
-FROM ubuntu:12.04
+FROM ubuntu:16.04
 
-# Install dependencies
-RUN apt-get update -y
-RUN apt-get install -y git curl apache2 php5 libapache2-mod-php5 php5-mcrypt php5-mysql
+#update all packages
+RUN apt-get update && \
+    apt-get -y dist-upgrade && \
+    apt-get -y autoremove && \
+    apt-get clean
 
-# Install app
-RUN rm -rf /var/www/*
-ADD src /var/www
-
-# Configure apache
+RUN apt-get install -y elinks curl graphicsmagick
+RUN apt-get install -y python-software-properties -y
+RUN apt-get install -y software-properties-common python-software-properties -y
+RUN add-apt-repository ppa:git-core/ppa -y
+RUn LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+RUN apt-get -y update
+RUN apt-get install -y apache2
+RUN apt-get install -y php7.1 libapache2-mod-php mcrypt php7.1-mcrypt php-mysql
 RUN a2enmod rewrite
-RUN chown -R www-data:www-data /var/www
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
 
+# Tidy up
+RUN apt-get -y autoremove && apt-get clean && apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get install php-mysql -y
+RUN mkdir /var/www/html/laravel
+RUN apt-get update -y
+COPY app/ /app/
+RUN chmod +x /app/init.sh
+RUN apt-get install -y composer
+RUN apt-get install -y php-mbstring  php-xml php-curl
 EXPOSE 80
 
-CMD ["/usr/sbin/apache2", "-D",  "FOREGROUND"]
+ENTRYPOINT ["/app/init.sh"]
+
+#RUN /etc/init.d/apache2 start
