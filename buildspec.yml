@@ -1,5 +1,6 @@
 phases:
 
+<<<<<<< HEAD
   pre_build:
 
    commands:
@@ -8,6 +9,8 @@ phases:
 
        - "$(aws ecr get-login --region us-east-1)"
 
+=======
+>>>>>>> 0ba06554a523654ea1d965d3a2e89b002ed05eff
   build:
 
     commands:
@@ -28,6 +31,7 @@ phases:
 
       - "echo Pushing the Docker image..."
 
+<<<<<<< HEAD
       - "docker push 980424229685.dkr.ecr.us-east-1.amazonaws.com/mywebserver:latest"
 
       - printf '[{"name":"myweb","imageUri":"980424229685.dkr.ecr.us-east-1.amazonaws.com/mywebserver:latest"}]' > imagedefinitions.json
@@ -39,3 +43,16 @@ artifacts:
   
 version: 0.2
 
+=======
+      - "docker push 672593526685.dkr.ecr.us-east-1.amazonaws.com/nodeserver:latest"
+
+  pre_build:
+
+    commands:
+
+      - "echo Logging in to Amazon ECR..."
+
+      - "$(aws ecr get-login --region us-east-1)"
+
+version: 0.1
+>>>>>>> 0ba06554a523654ea1d965d3a2e89b002ed05eff
