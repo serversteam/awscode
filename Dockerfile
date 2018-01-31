@@ -8,7 +8,7 @@ RUN apt-get install -y apache2
 
 
 COPY app/ /app/
-COPY test.txt /var/www/html/
+COPY aman.txt /var/www/html/
 RUN chmod +x /app/init.sh
 EXPOSE 80
 
