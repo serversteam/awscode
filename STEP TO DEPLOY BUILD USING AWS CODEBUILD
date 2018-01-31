@@ -1,0 +1,5 @@
+1. Create Cluster in  AWS ECS.
+2. Create Repo in ECR.
+3. Follow all steps to upload your Dockerfile in AWS ECR.
+4. Create CodeBuild project in AWS. Define source GIT HUB specify repo.
+5. Specify buildspec.yml file all changes for aotomate.
